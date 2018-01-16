@@ -34,12 +34,14 @@ class TLSFConan(ConanFile):
 
     def source(self):
         source_url = "https://github.com/mattconte/tlsf"
-        tools.get("{0}/archive/master.zip".format(source_url, self.version))
+        tools.get("{0}/archive/master.zip".format(source_url))
         extracted_dir = self.name + "-master"
 
         #Rename to "source_subfolder" is a convention to simplify later steps
         os.rename(extracted_dir, self.source_subfolder)
 
+    def configure(self):
+        del self.settings.compiler.libcxx
 
     def build(self):
         cmake = CMake(self)
